@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<body>
+<div id="app" v-once>
+    {{msg}}
+
+</div>
+<script type="text/javascript">
+    var data = {'msg':1};
+  var app = new Vue({
+      el: '#app',
+      data: data,
+      beforeCreate:function () {
+          console.log('beforeCreate');
+      }
+      ,created:function () {
+          console.log('created');
+      }
+      ,beforeMount: function () {
+          console.log('beforeMount');
+      }
+      ,mounted:function () {
+          console.log('mounted');
+      }
+  });
+  app.$watch('msg',function (newValue, oldValue) {
+      console.log(newValue);
+      console.log(oldValue);
+  });
+  app.$data.msg = 'hello......vue.....';
+</script>
+</body>
+</html>

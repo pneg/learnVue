@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>component2</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app-7">
+<my-component v-bind:class="{ active: isActive }"></my-component>
+</div>
+<div id="styles">
+    <div v-bind:style="styleObject">ek styles</div>
+</div>
+
+
+<script type="text/javascript">
+    Vue.component('my-component', {
+        template: '<p class="foo bar">Hi</p>'
+    });
+    var app7 = new Vue({
+        el: '#app-7',
+        data: {
+            isActive: true
+        }
+    });
+    var app = new Vue({
+        el: '#styles',
+        data: {
+            styleObject: {
+                color: 'red',
+                fontSize: '13px'
+            }
+        }
+    });
+</script>
+</body>
+</html>

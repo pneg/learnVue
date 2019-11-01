@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<body>
+<div id="app" v-once>
+    {{msg}}
+    <p>Using mustaches: {{ rawHtml }}</p>
+    <p><span v-html="rawHtml"></span></p>
+    <div v-bind:[attr]="color">test.....</div>
+    <p>{{ number + 1 }}</p>
+    <p>{{ ok ? 'YES' : 'NO' }}</p>
+    <p>{{ message.split('').reverse().join('') }}</p>
+    <p v-if="seen">现在你看到我了</p>
+    <a v-bind:href="url">百度...</a>
+    <p>
+        <a v-on:click="doSomething">执行函数</a>
+    </p>
+    <div @click="click1">
+        <div @click.stop="click2">
+            click me
+        </div>
+    </div>
+
+    <p>Original message: "{{ reversedMessage }}"</p>
+    <p>Computed reversed message: "{{ reversedMessage }}"</p>
+
+</div>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            'msg':1
+            ,'rawHtml':'<span style="color: red">This should be red.</span>'
+            ,'color':'blue'
+            ,'attr':'class'
+            ,'attributeName':'class'
+            ,'number':10
+            ,'ok':false
+            ,'message':'message'
+            ,'seen':true
+            ,'url':'https://cn.vuejs.org/v2/guide/syntax.html#%E6%96%87%E6%9C%AC'
+            ,'doSomething':''
+        },
+        beforeCreate:function () {
+            console.log('beforeCreate');
+        }
+        ,created:function () {
+            console.log('created');
+        }
+        ,beforeMount: function () {
+            console.log('beforeMount');
+        }
+        ,mounted:function () {
+            console.log('mounted');
+        }
+        ,methods:{
+            click1:function () {
+                console.log('click1...');
+            }
+            ,click2:function () {
+                console.log('click2.....');
+            }
+        }
+        ,computed: {
+            // 计算属性的 getter
+            reversedMessage: function () {
+                // `this` 指向 vm 实例
+                return this.message.split('').reverse().join('')
+            }
+        }
+    });
+    app.$watch('msg',function (newValue, oldValue) {
+        console.log(newValue);
+        console.log(oldValue);
+    });
+    app.$data.msg = 'hello......vue.....';
+</script>
+<style type="text/css">
+.red{color:red;}
+    .blue{color:blue;font-size:100px;}
+</style>
+</body>
+</html>
