@@ -12,7 +12,7 @@
     <h1>v-for实例</h1>
     <hr>
     <ol>
-        <li v-for="number in numbers">{{number}}</li>
+        <li v-for="number in sortNumbers">{{number}}</li>
     </ol>
     <hr>
     <ul>
@@ -94,7 +94,7 @@
         },
         computed:{
             sortNumbers:function(){
-                return this.numbers.sort( numbers);
+                return this.numbers.sort( sortNumbers);
             },
             sortstudents:function(){
                 return sortByKey(this.students,'age')
