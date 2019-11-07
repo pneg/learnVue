@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>events</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="example-1">
+    <button v-on:click="counter += 1">Add {{ counter }}</button>
+    <p>The button above has been clicked {{ counter }} times.</p>
+</div>
+
+<div id="example-2">
+    <!-- `greet` 是在下面定义的方法名 -->
+    <button v-on:click="greet">Greet</button>
+</div>
+
+<div id="example-3">
+    <button v-on:click="say('hi')">Say hi</button>
+    <button v-on:click="say('what')">Say what</button>
+
+    <button v-on:click="warn('Form cannot be submitted yet.', $event)">
+        Submit
+    </button>
+
+    <a v-on:click.stop="doThis">fdsfd</a>
+</div>
+
+<div id="app">
+
+    <div @click='divClickHandler' style="width: 200px;height:200px;background-color:red">
+
+        div
+
+        <!-- .stop 阻止冒泡 -->
+
+        <!-- 只执行btnClickHandler divClickHandler被阻止了 -->
+
+        <button @click.stop='btnClickHandler'>按钮</button>
+
+    </div>
+
+    <br/>
+
+    <div @click='divClickHandler' style="width: 200px;height:200px;background-color:red">
+
+        div
+
+        <!-- 阻止默认事件 -->
+
+        <!-- href 跳转失效 -->
+
+        <a href="http://www.baidu.com" @click.prevent='linkClick'>百度</a>
+
+    </div>
+
+    <br/>
+
+    <div @click.captrue='divClickHandler' style="width: 200px;height:200px;background-color:red">
+
+        div
+
+        <!-- 实现捕获触发事件机制 -->
+
+        <!-- 先执行divClickHandler 在执行btnClickHandler -->
+
+        <button @click='btnClickHandler'>按钮</button>
+
+    </div>
+
+    <!-- 只执行一次 -->
+
+    <a href="http://www.baidu.com" @click.prevent.once='linkClick'>百度</a>
+
+    <br/>
+    <div @click.self='divClickHandler' style="width: 200px;height:200px;background-color:red">
+
+        div stop.prevent
+
+
+        <button @click.self='btnClickHandler'>按钮</button>
+
+    </div>
+
+    <br/>
+
+    <!--<input v-on:keyup.13="submit">-->
+
+    <br/>
+    <input @keyup.ctrl="submit" type="text" v-model:value="name">
+
+
+</div>
+
+<div id="s1">s1
+    <div id="s2">s2</div>
+</div>
+<script>
+    s1.addEventListener("click",function(e){
+        console.log("s1 冒泡事件");
+    },false);
+    s2.addEventListener("click",function(e){
+        console.log("s2 冒泡事件");
+    },false);
+    s1.addEventListener("click",function(e){
+        console.log("s1 捕获事件");
+    },true);
+    s2.addEventListener("click",function(e){
+        console.log("s2 捕获事件");
+    },true);
+</script>
+
+<ul id="color-list">
+    <li>red</li>
+    <li>yellow</li>
+    <li>blue</li>
+    <li>green</li>
+    <li>black</li>
+    <li>white</li>
+</ul>
+
+<script>
+    /*(function(){
+        var color_list = document.getElementById('color-list');
+        var colors = color_list.getElementsByTagName('li');
+        for(var i=0;i<colors.length;i++){
+            colors[i].addEventListener('click',showColor,false);
+        };
+        function showColor(e){
+            var x = e.target;
+            console.log("The color is " + x.innerHTML);
+        };
+    })();*/
+    (function(){
+        var color_list = document.getElementById('color-list');
+        color_list.addEventListener('click',showColor,false);
+        function showColor(e){
+            var x = e.target;
+            if(x.nodeName.toLowerCase() === 'li'){
+                console.log('The color is ' + x.innerHTML);
+            }
+        }
+    })();
+</script>
+
+<script type="text/javascript">
+    var example1 = new Vue({
+        el: '#example-1',
+        data: {
+            counter: 0
+        }
+    });
+
+    var example2 = new Vue({
+        el: '#example-2',
+        data: {
+            name: 'Vue.js'
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            greet: function (event) {
+                // `this` 在方法里指向当前 Vue 实例
+                alert('Hello ' + this.name + '!')
+                // `event` 是原生 DOM 事件
+                if (event) {
+                    alert(event.target.tagName)
+                }
+            }
+        }
+    });
+    // 也可以用 JavaScript 直接调用方法
+    //example2.greet() // => 'Hello Vue.js!'
+
+    new Vue({
+        el: '#example-3',
+        methods: {
+            say: function (message) {
+                alert(message)
+            },
+            warn: function (message, event) {
+                // 现在我们可以访问原生事件对象
+                if (event) event.preventDefault()
+                alert(message)
+            }
+        }
+    });
+
+    let vm = new Vue({
+
+        el: "#app",
+
+        data: {
+            name:''
+        },
+
+        methods: {
+
+// div点击事件
+
+            divClickHandler() {
+
+                console.log('点击了div')
+
+            },
+
+// 按钮点击事件
+
+            btnClickHandler() {
+
+                console.log('点击了btn')
+
+            },
+
+//阻止默认事件
+
+            linkClick() {
+
+                console.log("link click")
+
+            },
+            submit() {
+
+                console.log('提交')
+
+            },
+
+        },
+
+    })
+
+</script>
+</body>
+</html>
