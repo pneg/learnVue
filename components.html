@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>components组件基础</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="components-demo">
+    <button-counter title="title1" @clicknow="clicknow"></button-counter>
+    <button-counter title="title2"></button-counter>
+    <button-counter title="title3"></button-counter>
+</div>
+<div id="blog-post-demo">
+
+</div>
+
+<script type="text/javascript">
+
+    Vue.component('button-counter', {
+        props:['title'],
+        data: function () {
+            return {
+                count: 0
+            }
+        },
+        template: '<div><h1>hi...</h1><button v-on:click="clickfun">{{title}}You clicked me {{ count }} times.</button></div>',
+        methods:{
+            clickfun: function () {
+                this.count++;
+                this.$emit('clicknow', this.count)
+            }
+        }
+    });
+
+    new Vue({ 
+        el: '#components-demo',
+        methods:{
+            clicknow: function (e) {
+                console.log(e)
+            }
+        }
+    });
+
+
+</script>
+</body>
+</html>
