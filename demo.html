@@ -108,10 +108,12 @@
             //选中改变状态
             changeState(index){
                 let curState=this.list[index].finished;
+                console.log(curState);
                 this.list[index].finished=!curState;
             },
             //删除
             removeList(index){
+                console.log(index);
                 this.list.splice(index,1);
             }
         }
